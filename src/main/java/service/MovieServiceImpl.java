@@ -2,7 +2,7 @@ package service;
 
 import model.Movie;
 import model.MovieResponse;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.URI;
@@ -28,10 +28,31 @@ public class MovieServiceImpl implements MovieService{
         return List.of();
     }
 
+//    @Override
+//    public MovieResponse getDummyMovie(int skip , int limit) {
+//        String url =
+//                String.format("https://api.themoviedb.org/3/discover/movie?api_key=bc635944a4e43701982406e7cd2dbda6",skip,limit);
+//        HttpRequest request = HttpRequest.newBuilder()
+//                .uri(URI.create(url))
+//                .GET()
+//                .build();
+//        try{
+//            HttpResponse<String> response = client.send(
+//                    request, HttpResponse.BodyHandlers.ofString()
+//            );
+//            System.out.println("Status Code" + response.statusCode());
+//            System.out.println("Status " + response.body());
+//            return mapper.readValue(response.body(), MovieResponse.class);
+//        }catch (IOException | InterruptedException e){
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
+
     @Override
-    public MovieResponse getDummyMovie(int skip , int limit) {
+    public MovieResponse getDummyMovie(String movieName , int page) {
         String url =
-                String.format("https://dummyjson.com/products?skip=%d&limit=%d",skip,limit);
+                String.format("https://api.themoviedb.org/3/search/movie?api_key=bc635944a4e43701982406e7cd2dbda6&query=%s&page=%d",movieName,page);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .GET()
@@ -40,15 +61,14 @@ public class MovieServiceImpl implements MovieService{
             HttpResponse<String> response = client.send(
                     request, HttpResponse.BodyHandlers.ofString()
             );
-            System.out.println("Status Code" + response.statusCode());
-            System.out.println("Status " + response.body());
+//            System.out.println("Status Code" + response.statusCode());
+//            System.out.println("Status " + response.body());
             return mapper.readValue(response.body(), MovieResponse.class);
         }catch (IOException | InterruptedException e){
             throw new RuntimeException(e);
         }
 
     }
-
 //    private void initData(){
 //        Random random = new Random();
 //        for (int i = 1; i<= 40; i++){
@@ -60,6 +80,6 @@ public class MovieServiceImpl implements MovieService{
 //    }
 
     static void main() {
-        new MovieServiceImpl().getDummyMovie(10,10);
+        new MovieServiceImpl().getDummyMovie("love",3);
     }
 }

@@ -8,6 +8,20 @@ version = '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+// ============= For building the application into a .jar file =============
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'App'
+        )
+    }
+    // This line tells Gradle to include all dependencies into the JAR
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    // Prevents "duplicate strategy" errors in newer Gradle versions
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
@@ -21,7 +35,7 @@ dependencies {
     // Source: https://mvnrepository.com/artifact/org.nocrala.tools.texttablefmt/text-table-formatter
     implementation 'org.nocrala.tools.texttablefmt:text-table-formatter:1.2.4'
     // Source: https://mvnrepository.com/artifact/tools.jackson.core/jackson-databind
-    implementation 'tools.jackson.core:jackson-databind:3.1.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
 }
 
 test {

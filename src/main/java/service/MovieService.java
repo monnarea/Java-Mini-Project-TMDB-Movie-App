@@ -8,5 +8,6 @@ import java.util.List;
 public interface MovieService {
 
     List<Movie> getAll();
-    MovieResponse getDummyMovie(int skip , int limit);
+//    MovieResponse getDummyMovie(int skip , int limit);
+    MovieResponse getDummyMovie(String movieName, int page);
 }
