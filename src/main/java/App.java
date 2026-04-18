@@ -27,11 +27,74 @@ public class App {
         pageNumber = pageNum;
 //        skip =  (pageNumber - 1) * pageSize;
     }
+    private static void popularMovie(){
+        sideMenu:
+        while (true){
+            int p = 1;
+            MovieResponse popularMovie = service.getPopularMovie(p);
+            TableRenderer.displayTableMovie(popularMovie);
+
+//            System.out.printf("Page %d / %d", pageNumber, totalPage);
+            System.out.println("""
+                    [n]  Next Page
+                    [p]  Previous Page
+                    [gt] Got To Page
+                    [md] Movie Detail
+                    [b]  Back to Main menu
+                    [e]  Exit
+                    """);
+            System.out.print("Choose option: ");
+            String op = scanner.next();
+            switch (op.toLowerCase()){
+                case "n" -> {
+
+                    if ( p == popularMovie.getTotalPages()){
+                        p = popularMovie.getTotalPages();
+                    }else {
+                        p += 1;
+                    }
+                    TableRenderer.displayTableMovie(popularMovie);
+                }
+                case "p" -> {
+                    if (p == 1){
+                        p = 1;
+                    }else {
+                        p -= 1;
+                    }
+                }
+                case "gt" -> {
+                    boolean validInput = false;
+                    while (!validInput){
+                        System.out.print("[!] Enter page number: ");
+                        int page = scanner.nextInt();
+                        if (page > popularMovie.getTotalPages()){
+                            System.out.println("There are only "+popularMovie.getTotalPages()+" pages ! Please Enter another number");
+                        } else if (page <= 0) {
+                            System.out.println("Please Enter another page that greater that 0 !");
+                        }else {
+                            p = page;
+                            validInput = true;
+                        }
+                    }
+
+                }
+                case "md" -> {
+                    System.out.print("[!] Enter Movie Id: ");
+                    int id = scanner.nextInt();
+                    MovieInfo movieInfo = service.getMovieDetail(id);
+                    TableRenderer.displayTableMovieInformation(movieInfo);
+                }
+                case "b" -> {
+                    break sideMenu;
+                }
+                case "e" -> System.exit(0);
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
 //        List<Movie> movies = service.getAll();
-
-
-
 
         while (true){
 
@@ -47,19 +110,21 @@ public class App {
             System.out.print("Enter Movie Name: ");
             String name = scanner.next();
             int p = 1;
-            MovieResponse response = service.getDummyMovie(
-                    name , p
-            );
-            TableRenderer.displayTableMovie(response);
+
             menu:
             while (true){
 
+                MovieResponse response = service.getDummyMovie(
+                        name , p
+                );
+                TableRenderer.displayTableMovie(response);
 //            System.out.printf("Page %d / %d", pageNumber, totalPage);
                 System.out.println("""
                     [n]  Next Page
                     [p]  Previous Page
                     [gt] Got To Page
                     [md] Movie Detail
+                    [gp] View Popular Movie
                     [b]  Back
                     [e]  Exit
                     """);
@@ -74,7 +139,7 @@ public class App {
                         }else {
                             p += 1;
                         }
-                        TableRenderer.displayTableMovie(response);
+
                     }
                     case "p" -> {
                         if (p == 1){
@@ -104,6 +169,9 @@ public class App {
                         int id = scanner.nextInt();
                         MovieInfo movieInfo = service.getMovieDetail(id);
                         TableRenderer.displayTableMovieInformation(movieInfo);
+                    }
+                    case "gp" -> {
+                        popularMovie();
                     }
                     case "b" -> {
                         break menu;

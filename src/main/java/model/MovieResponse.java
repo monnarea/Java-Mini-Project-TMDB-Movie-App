@@ -13,8 +13,11 @@ import java.util.List;
 @ToString
 public class MovieResponse {
     private List<Movie> results;
+    @JsonProperty("page")
     private Integer page;
+    @JsonProperty("total_pages")
     private Integer totalPages;
+    @JsonProperty("total_results")
     private Integer totalResults;
 //    private List<Movie> movies;
 //    private Integer total;
