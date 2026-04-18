@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class MovieServiceImpl implements MovieService{
 
+
     private static final List<Movie> movies = new ArrayList<>();
 
     private static final HttpClient client =
@@ -50,6 +51,7 @@ public class MovieServiceImpl implements MovieService{
     @Override
     public String getTrailer(int id) {
         String url = String.format("https://api.themoviedb.org/3/movie/%d/videos?api_key=bc635944a4e43701982406e7cd2dbda6", id);
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYzYzNTk0NGE0ZTQzNzAxOTgyNDA2ZTdjZDJkYmRhNiIsIm5iZiI6MTc3NjI2MDc4Ny4wNzcsInN1YiI6IjY5ZGY5NmIzMmExNjA0YzI1OWI0Y2I2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZNRiOHy2zXtK8SkOJQN3uRYYBXQ8QOAmyhc-VjDzxMI";
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
 
         try {
@@ -72,8 +74,11 @@ public class MovieServiceImpl implements MovieService{
     public MovieResponse getDummyMovie(String movieName , int page) {
         String url =
                 String.format("https://api.themoviedb.org/3/search/movie?api_key=bc635944a4e43701982406e7cd2dbda6&query=%s&page=%d",movieName,page);
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYzYzNTk0NGE0ZTQzNzAxOTgyNDA2ZTdjZDJkYmRhNiIsIm5iZiI6MTc3NjI2MDc4Ny4wNzcsInN1YiI6IjY5ZGY5NmIzMmExNjA0YzI1OWI0Y2I2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZNRiOHy2zXtK8SkOJQN3uRYYBXQ8QOAmyhc-VjDzxMI";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
+                .header("Authorization", "Bearer " + token)
+                .header("Accept", "application/json")
                 .GET()
                 .build();
         try{
@@ -95,8 +100,11 @@ public class MovieServiceImpl implements MovieService{
     public MovieInfo getMovieDetail(int id) {
         String url =
                 String.format("https://api.themoviedb.org/3/movie/%d?api_key=bc635944a4e43701982406e7cd2dbda6",id);
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYzYzNTk0NGE0ZTQzNzAxOTgyNDA2ZTdjZDJkYmRhNiIsIm5iZiI6MTc3NjI2MDc4Ny4wNzcsInN1YiI6IjY5ZGY5NmIzMmExNjA0YzI1OWI0Y2I2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZNRiOHy2zXtK8SkOJQN3uRYYBXQ8QOAmyhc-VjDzxMI";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
+                .header("Authorization", "Bearer " + token)
+                .header("Accept", "application/json")
                 .GET()
                 .build();
         try{

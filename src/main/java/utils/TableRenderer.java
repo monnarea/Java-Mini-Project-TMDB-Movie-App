@@ -23,7 +23,7 @@ public class TableRenderer {
         );
         CellStyle center = new CellStyle(CellStyle.HorizontalAlign.CENTER);
 
-        if (response == null || response.getMovies() == null) {
+        if (response == null || response.getResults() == null) {
             System.out.println("No movies found to display.");
             return;
         }
@@ -35,7 +35,7 @@ public class TableRenderer {
         MovieService movieService = new MovieServiceImpl();
 //        List<Movie> partialData = movies
 //                        .stream().skip(skip).limit(limit).toList();
-        for (Movie movie : response.getMovies()){
+        for (Movie movie : response.getResults()){
             table.addCell(movie.getId().toString());
             table.addCell(movie.getOriginalTitle());
             table.addCell(movie.getReleaseDate() != null ? movie.getReleaseDate() : "N/A");

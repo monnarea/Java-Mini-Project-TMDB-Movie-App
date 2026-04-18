@@ -13,20 +13,18 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 public class Movie {
-    @JsonProperty("id")
+//    @JsonProperty("id")
     private Integer id;
 
     @JsonProperty("original_title")
     private String originalTitle;
 
     @JsonProperty("release_date")
-    private String releaseDate;   // ← use String, not Date (format is "2024-01-15")
+    private String releaseDate;
 
     @JsonProperty("vote_average")
     private Double voteAverage;
 
-    @JsonProperty("video")        // or whatever field "movie" is meant to map to
-    private String movie;
 //    private Integer id;
 //    private String originalTitle;
 //    private Date releaseDate;

@@ -13,7 +13,6 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrailerResponse {
-    @JsonProperty("results")
     private List<Trailer> results;
 }
 

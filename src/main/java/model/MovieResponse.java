@@ -12,17 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class MovieResponse {
-
-    @JsonProperty("results")
-    private List<Movie> movies;
-
-    @JsonProperty("page")
+    private List<Movie> results;
     private Integer page;
-
-    @JsonProperty("total_pages")
     private Integer totalPages;
-
-    @JsonProperty("total_results")
     private Integer totalResults;
 //    private List<Movie> movies;
 //    private Integer total;
