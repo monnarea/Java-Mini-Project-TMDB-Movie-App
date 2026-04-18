@@ -1,7 +1,6 @@
 package service;
 
-import model.Movie;
-import model.MovieResponse;
+import model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -48,6 +47,26 @@ public class MovieServiceImpl implements MovieService{
 //        }
 //
 //    }
+    @Override
+    public String getTrailer(int id) {
+        String url = String.format("https://api.themoviedb.org/3/movie/%d/videos?api_key=bc635944a4e43701982406e7cd2dbda6", id);
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            TrailerResponse trailerData = mapper.readValue(response.body(), TrailerResponse.class);
+
+            return trailerData.getResults().stream()
+                    .filter(v -> "Trailer".equalsIgnoreCase(v.getType()) && "YouTube".equalsIgnoreCase(v.getSite()))
+                    .map(v -> "https://www.youtube.com/watch?v=" + v.getKey())
+                    .findFirst()
+                    .orElse("N/A");
+
+        } catch (IOException | InterruptedException e) {
+            return "N/A";
+        }
+    }
+
 
     @Override
     public MovieResponse getDummyMovie(String movieName , int page) {
@@ -69,6 +88,30 @@ public class MovieServiceImpl implements MovieService{
         }
 
     }
+
+
+
+    @Override
+    public MovieInfo getMovieDetail(int id) {
+        String url =
+                String.format("https://api.themoviedb.org/3/movie/%d?api_key=bc635944a4e43701982406e7cd2dbda6",id);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        try{
+            HttpResponse<String> response = client.send(
+                    request, HttpResponse.BodyHandlers.ofString()
+            );
+            System.out.println("Status Code" + response.statusCode());
+            System.out.println("Status " + response.body());
+            return mapper.readValue(response.body(), MovieInfo.class);
+        }catch (IOException | InterruptedException e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
 //    private void initData(){
 //        Random random = new Random();
 //        for (int i = 1; i<= 40; i++){
@@ -80,6 +123,9 @@ public class MovieServiceImpl implements MovieService{
 //    }
 
     static void main() {
-        new MovieServiceImpl().getDummyMovie("love",3);
+
+//        new MovieServiceImpl().getDummyMovie("love",3);
+        new MovieServiceImpl().getMovieDetail(110);
     }
+
 }

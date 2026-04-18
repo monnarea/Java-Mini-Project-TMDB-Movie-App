@@ -1,3 +1,4 @@
+import model.MovieInfo;
 import model.MovieResponse;
 import service.MovieService;
 import service.MovieServiceImpl;
@@ -46,12 +47,13 @@ public class App {
             System.out.print("Enter Movie Name: ");
             String name = scanner.next();
             int p = 1;
-
+            MovieResponse response = service.getDummyMovie(
+                    name , p
+            );
+            TableRenderer.displayTableMovie(response);
+            menu:
             while (true){
-                MovieResponse response = service.getDummyMovie(
-                        name , p
-                );
-                TableRenderer.displayTableMovie(response);
+
 //            System.out.printf("Page %d / %d", pageNumber, totalPage);
                 System.out.println("""
                     [n]  Next Page
@@ -63,6 +65,7 @@ public class App {
                     """);
                 System.out.print("Choose option: ");
                 String op = scanner.next();
+
                 switch (op.toLowerCase()){
                     case "n" -> {
 
@@ -71,6 +74,7 @@ public class App {
                         }else {
                             p += 1;
                         }
+                        TableRenderer.displayTableMovie(response);
                     }
                     case "p" -> {
                         if (p == 1){
@@ -95,9 +99,14 @@ public class App {
                         }
 
                     }
-                    case "md" -> {}
+                    case "md" -> {
+                        System.out.print("[!] Enter Movie Id: ");
+                        int id = scanner.nextInt();
+                        MovieInfo movieInfo = service.getMovieDetail(id);
+                        TableRenderer.displayTableMovieInformation(movieInfo);
+                    }
                     case "b" -> {
-                        break;
+                        break menu;
                     }
                     case "e" -> System.exit(0);
                 }
