@@ -142,6 +142,28 @@ public class MovieServiceImpl implements MovieService{
         }
     }
 
+    @Override
+    public MovieResponse getTopRatedMovie(int page) {
+        String url = String.format("https://api.themoviedb.org/3/movie/top_rated?api_key=bc635944a4e43701982406e7cd2dbda6&page=%d",page);
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYzYzNTk0NGE0ZTQzNzAxOTgyNDA2ZTdjZDJkYmRhNiIsIm5iZiI6MTc3NjI2MDc4Ny4wNzcsInN1YiI6IjY5ZGY5NmIzMmExNjA0YzI1OWI0Y2I2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZNRiOHy2zXtK8SkOJQN3uRYYBXQ8QOAmyhc-VjDzxMI";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Authorization", "Bearer " + token)
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        try{
+            HttpResponse<String> response = client.send(
+                    request, HttpResponse.BodyHandlers.ofString()
+            );
+            System.out.println("Status Code" + response.statusCode());
+            System.out.println("Status " + response.body());
+            return mapper.readValue(response.body(), MovieResponse.class);
+        }catch (IOException | InterruptedException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 //    private void initData(){
 //        Random random = new Random();
 //        for (int i = 1; i<= 40; i++){
@@ -155,7 +177,7 @@ public class MovieServiceImpl implements MovieService{
     static void main() {
 
 //        new MovieServiceImpl().getDummyMovie("love",3);
-        new MovieServiceImpl().getPopularMovie(1);
+        new MovieServiceImpl().getTopRatedMovie(1);
     }
 
 }

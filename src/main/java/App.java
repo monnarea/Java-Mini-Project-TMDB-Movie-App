@@ -92,6 +92,71 @@ public class App {
         }
 
     }
+    private static void topRatedMovie(){
+        int p = 1;
+        sideMenu:
+        while (true){
+
+            MovieResponse topRatedMovie = service.getTopRatedMovie(p);
+            TableRenderer.displayTableMovie(topRatedMovie);
+
+//            System.out.printf("Page %d / %d", pageNumber, totalPage);
+            System.out.println("""
+                    [n]  Next Page
+                    [p]  Previous Page
+                    [gt] Got To Page
+                    [md] Movie Detail
+                    [b]  Back to Main menu
+                    [e]  Exit
+                    """);
+            System.out.print("Choose option: ");
+            String op = scanner.next();
+            switch (op.toLowerCase()){
+                case "n" -> {
+
+                    if ( p == topRatedMovie.getTotalPages()){
+                        p = topRatedMovie.getTotalPages();
+                    }else {
+                        p += 1;
+                    }
+                }
+                case "p" -> {
+                    if (p == 1){
+                        p = 1;
+                    }else {
+                        p -= 1;
+                    }
+                }
+                case "gt" -> {
+                    boolean validInput = false;
+                    while (!validInput){
+                        System.out.print("[!] Enter page number: ");
+                        int page = scanner.nextInt();
+                        if (page > topRatedMovie.getTotalPages()){
+                            System.out.println("There are only "+ topRatedMovie.getTotalPages()+" pages ! Please Enter another number");
+                        } else if (page <= 0) {
+                            System.out.println("Please Enter another page that greater that 0 !");
+                        }else {
+                            p = page;
+                            validInput = true;
+                        }
+                    }
+
+                }
+                case "md" -> {
+                    System.out.print("[!] Enter Movie Id: ");
+                    int id = scanner.nextInt();
+                    MovieInfo movieInfo = service.getMovieDetail(id);
+                    TableRenderer.displayTableMovieInformation(movieInfo);
+                }
+                case "b" -> {
+                    break sideMenu;
+                }
+                case "e" -> System.exit(0);
+            }
+        }
+
+    }
 
     private static void menu(){
         System.out.print("Enter Movie Name: ");
@@ -185,6 +250,7 @@ public class App {
                     Choose Option
                     [s] Search Movie
                     [g] Get Popular Movie
+                    [t] Get Top Rated Movie
                     [e] Exit.
                     """);
             System.out.print("Enter Option: ");
@@ -195,6 +261,9 @@ public class App {
                 }
                 case "g" -> {
                     popularMovie();
+                }
+                case "t" -> {
+                    topRatedMovie();
                 }
                 case "e" -> System.exit(0);
             }

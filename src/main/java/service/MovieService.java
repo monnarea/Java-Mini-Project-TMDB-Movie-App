@@ -16,4 +16,5 @@ public interface MovieService {
     String getTrailer(int id);
     MovieInfo getMovieDetail(int id);
     MovieResponse getPopularMovie(int page);
+    MovieResponse getTopRatedMovie(int page);
 }
