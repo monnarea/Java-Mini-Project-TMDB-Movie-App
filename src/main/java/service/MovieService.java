@@ -18,4 +18,5 @@ public interface MovieService {
     MovieResponse getPopularMovie(int page);
     MovieResponse getTopRatedMovie(int page);
     MovieResponse getUpcoming(int page);
+    MovieResponse getNowPlaying(int page);
 }
