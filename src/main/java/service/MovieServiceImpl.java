@@ -156,8 +156,8 @@ public class MovieServiceImpl implements MovieService{
             HttpResponse<String> response = client.send(
                     request, HttpResponse.BodyHandlers.ofString()
             );
-            System.out.println("Status Code" + response.statusCode());
-            System.out.println("Status " + response.body());
+//            System.out.println("Status Code" + response.statusCode());
+//            System.out.println("Status " + response.body());
             return mapper.readValue(response.body(), MovieResponse.class);
         }catch (IOException | InterruptedException e){
             throw new RuntimeException(e);

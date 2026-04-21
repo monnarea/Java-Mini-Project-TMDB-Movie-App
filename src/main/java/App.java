@@ -93,6 +93,7 @@ public class App {
 
     }
     private static void topRatedMovie(){
+
         int p = 1;
         sideMenu:
         while (true){
@@ -158,7 +159,7 @@ public class App {
 
     }
 
-    private static void menu(){
+    private static void searchmMenu(){
         System.out.print("Enter Movie Name: ");
         String name = scanner.next();
         int p = 1;
@@ -249,7 +250,7 @@ public class App {
             System.out.println("""
                     Choose Option
                     [s] Search Movie
-                    [g] Get Popular Movie
+                    [p] Get Popular Movie
                     [t] Get Top Rated Movie
                     [e] Exit.
                     """);
@@ -257,12 +258,15 @@ public class App {
             String op = scanner.next();
             switch (op.toLowerCase()) {
                 case "s" -> {
-                    menu();
+                    System.out.println("=========== [[ Search Movie ]] ===========");
+                    searchmMenu();
                 }
-                case "g" -> {
+                case "p" -> {
+                    System.out.println("=========== [[ Popular Movie ]] ===========");
                     popularMovie();
                 }
                 case "t" -> {
+                    System.out.println("=========== [[ Top Rated Movie ]] ===========");
                     topRatedMovie();
                 }
                 case "e" -> System.exit(0);
