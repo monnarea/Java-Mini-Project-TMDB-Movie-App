@@ -17,4 +17,5 @@ public interface MovieService {
     MovieInfo getMovieDetail(int id);
     MovieResponse getPopularMovie(int page);
     MovieResponse getTopRatedMovie(int page);
+    MovieResponse getUpcoming(int page);
 }
