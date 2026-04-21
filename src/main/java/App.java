@@ -99,7 +99,7 @@ public class App {
                     [b]  Back to Main menu
                     [e]  Exit
                     """);
-            System.out.print("Choose option: ");
+            System.out.print(cyan+"Choose option: ");
             String op = scanner.next();
             switch (op.toLowerCase()){
                 case "n" -> {
