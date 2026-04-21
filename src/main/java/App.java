@@ -7,26 +7,15 @@ import utils.TableRenderer;
 import java.util.Scanner;
 
 public class App {
+    public static final String green = "\u001B[32m";
+    public static final String blue = "\u001B[34m";
+    public static final String yellow = "\u001B[33m";
+    public static final String purple = "\u001B[35m";
+    public static final String red = "\u001B[31m";
+    public static final String cyan = "\u001B[36m";
+    public static final String white = "\u001B[37m";
     private static Scanner scanner = new Scanner(System.in);
     private static final MovieService service = new MovieServiceImpl();
-//    private static int pageSize = 20;
-//    private static int pageNumber = 1;
-////    private static int totalPage = (service.getAll().size() + pageSize -1 ) / pageSize;
-//    private static int totalPage = 2;
-//    private static int skip = (pageNumber - 1) * pageSize;
-
-    private static void updatePageNumber(int pageNum ,int pageNumber, int totalPage){
-        if (pageNum < 1){
-            pageNumber = 1 ;
-            return;
-        }
-        if (pageNum > totalPage){
-            pageNumber = totalPage;
-            return;
-        }
-        pageNumber = pageNum;
-//        skip =  (pageNumber - 1) * pageSize;
-    }
     private static void popularMovie(){
         int p = 1;
         sideMenu:
@@ -36,7 +25,7 @@ public class App {
             TableRenderer.displayTableMovie(popularMovie);
 
 //            System.out.printf("Page %d / %d", pageNumber, totalPage);
-            System.out.println("""
+            System.out.println( purple+"""
                     [n]  Next Page
                     [p]  Previous Page
                     [gt] Got To Page
@@ -44,7 +33,7 @@ public class App {
                     [b]  Back to Main menu
                     [e]  Exit
                     """);
-            System.out.print("Choose option: ");
+            System.out.print(cyan+"Choose option: ");
             String op = scanner.next();
             switch (op.toLowerCase()){
                 case "n" -> {
@@ -68,9 +57,9 @@ public class App {
                         System.out.print("[!] Enter page number: ");
                         int page = scanner.nextInt();
                         if (page > popularMovie.getTotalPages()){
-                            System.out.println("There are only "+popularMovie.getTotalPages()+" pages ! Please Enter another number");
+                            System.out.println(yellow+"There are only "+popularMovie.getTotalPages()+" pages ! Please Enter another number");
                         } else if (page <= 0) {
-                            System.out.println("Please Enter another page that greater that 0 !");
+                            System.out.println(yellow+"Please Enter another page that greater that 0 !");
                         }else {
                             p = page;
                             validInput = true;
@@ -79,7 +68,7 @@ public class App {
 
                 }
                 case "md" -> {
-                    System.out.print("[!] Enter Movie Id: ");
+                    System.out.print(cyan+"[!] Enter Movie Id: ");
                     int id = scanner.nextInt();
                     MovieInfo movieInfo = service.getMovieDetail(id);
                     TableRenderer.displayTableMovieInformation(movieInfo);
@@ -102,7 +91,7 @@ public class App {
             TableRenderer.displayTableMovie(topRatedMovie);
 
 //            System.out.printf("Page %d / %d", pageNumber, totalPage);
-            System.out.println("""
+            System.out.println(blue+"""
                     [n]  Next Page
                     [p]  Previous Page
                     [gt] Got To Page
@@ -131,12 +120,12 @@ public class App {
                 case "gt" -> {
                     boolean validInput = false;
                     while (!validInput){
-                        System.out.print("[!] Enter page number: ");
+                        System.out.print(cyan+"[!] Enter page number: ");
                         int page = scanner.nextInt();
                         if (page > topRatedMovie.getTotalPages()){
-                            System.out.println("There are only "+ topRatedMovie.getTotalPages()+" pages ! Please Enter another number");
+                            System.out.println(yellow+"There are only "+ topRatedMovie.getTotalPages()+" pages ! Please Enter another number");
                         } else if (page <= 0) {
-                            System.out.println("Please Enter another page that greater that 0 !");
+                            System.out.println(yellow+"Please Enter another page that greater that 0 !");
                         }else {
                             p = page;
                             validInput = true;
@@ -145,7 +134,7 @@ public class App {
 
                 }
                 case "md" -> {
-                    System.out.print("[!] Enter Movie Id: ");
+                    System.out.print(cyan+"[!] Enter Movie Id: ");
                     int id = scanner.nextInt();
                     MovieInfo movieInfo = service.getMovieDetail(id);
                     TableRenderer.displayTableMovieInformation(movieInfo);
@@ -168,7 +157,7 @@ public class App {
             TableRenderer.displayTableMovie(nowPlaying);
 
 //            System.out.printf("Page %d / %d", pageNumber, totalPage);
-            System.out.println("""
+            System.out.println( purple+"""
                     [n]  Next Page
                     [p]  Previous Page
                     [gt] Got To Page
@@ -176,7 +165,7 @@ public class App {
                     [b]  Back to Main menu
                     [e]  Exit
                     """);
-            System.out.print("Choose option: ");
+            System.out.print(cyan+"Choose option: ");
             String op = scanner.next();
             switch (op.toLowerCase()){
                 case "n" -> {
@@ -197,12 +186,12 @@ public class App {
                 case "gt" -> {
                     boolean validInput = false;
                     while (!validInput){
-                        System.out.print("[!] Enter page number: ");
+                        System.out.print(cyan+"[!] Enter page number: ");
                         int page = scanner.nextInt();
                         if (page > nowPlaying.getTotalPages()){
-                            System.out.println("There are only "+ nowPlaying.getTotalPages()+" pages ! Please Enter another number");
+                            System.out.println(yellow+"There are only "+ nowPlaying.getTotalPages()+" pages ! Please Enter another number");
                         } else if (page <= 0) {
-                            System.out.println("Please Enter another page that greater that 0 !");
+                            System.out.println(yellow+"Please Enter another page that greater that 0 !");
                         }else {
                             p = page;
                             validInput = true;
@@ -211,7 +200,7 @@ public class App {
 
                 }
                 case "md" -> {
-                    System.out.print("[!] Enter Movie Id: ");
+                    System.out.print(cyan+"[!] Enter Movie Id: ");
                     int id = scanner.nextInt();
                     MovieInfo movieInfo = service.getMovieDetail(id);
                     TableRenderer.displayTableMovieInformation(movieInfo);
@@ -234,7 +223,7 @@ public class App {
             TableRenderer.displayTableMovie(upcoming);
 
 //            System.out.printf("Page %d / %d", pageNumber, totalPage);
-            System.out.println("""
+            System.out.println( blue+"""
                     [n]  Next Page
                     [p]  Previous Page
                     [gt] Got To Page
@@ -242,7 +231,7 @@ public class App {
                     [b]  Back to Main menu
                     [e]  Exit
                     """);
-            System.out.print("Choose option: ");
+            System.out.print(cyan+"Choose option: ");
             String op = scanner.next();
             switch (op.toLowerCase()){
                 case "n" -> {
@@ -263,12 +252,12 @@ public class App {
                 case "gt" -> {
                     boolean validInput = false;
                     while (!validInput){
-                        System.out.print("[!] Enter page number: ");
+                        System.out.print(cyan+"[!] Enter page number: ");
                         int page = scanner.nextInt();
                         if (page > upcoming.getTotalPages()){
-                            System.out.println("There are only "+ upcoming.getTotalPages()+" pages ! Please Enter another number");
+                            System.out.println(yellow+"There are only "+ upcoming.getTotalPages()+" pages ! Please Enter another number");
                         } else if (page <= 0) {
-                            System.out.println("Please Enter another page that greater that 0 !");
+                            System.out.println(yellow+"Please Enter another page that greater that 0 !");
                         }else {
                             p = page;
                             validInput = true;
@@ -277,7 +266,7 @@ public class App {
 
                 }
                 case "md" -> {
-                    System.out.print("[!] Enter Movie Id: ");
+                    System.out.print(cyan+"[!] Enter Movie Id: ");
                     int id = scanner.nextInt();
                     MovieInfo movieInfo = service.getMovieDetail(id);
                     TableRenderer.displayTableMovieInformation(movieInfo);
@@ -291,7 +280,7 @@ public class App {
 
     }
     private static void searchmMenu(){
-        System.out.print("Enter Movie Name: ");
+        System.out.print(cyan+"Enter Movie Name: ");
         String name = scanner.next();
         int p = 1;
 
@@ -303,7 +292,7 @@ public class App {
             );
             TableRenderer.displayTableMovie(response);
 //            System.out.printf("Page %d / %d", pageNumber, totalPage);
-            System.out.println("""
+            System.out.println(purple+"""
                     [n]  Next Page
                     [p]  Previous Page
                     [gt] Got To Page
@@ -311,7 +300,7 @@ public class App {
                     [b]  Back
                     [e]  Exit
                     """);
-            System.out.print("Choose option: ");
+            System.out.print(cyan+"Choose option: ");
             String op = scanner.next();
 
             switch (op.toLowerCase()){
@@ -334,12 +323,12 @@ public class App {
                 case "gt" -> {
                     boolean validInput = false;
                     while (!validInput){
-                        System.out.print("[!] Enter page number: ");
+                        System.out.print(cyan+"[!] Enter page number: ");
                         int page = scanner.nextInt();
                         if (page > response.getTotalPages()){
-                            System.out.println("There are only "+response.getTotalPages()+" pages ! Please Enter another number");
+                            System.out.println(yellow+"There are only "+response.getTotalPages()+" pages ! Please Enter another number");
                         } else if (page <= 0) {
-                            System.out.println("Please Enter another page that greater that 0 !");
+                            System.out.println(yellow+"Please Enter another page that greater that 0 !");
                         }else {
                             p = page;
                             validInput = true;
@@ -348,7 +337,7 @@ public class App {
 
                 }
                 case "md" -> {
-                    System.out.print("[!] Enter Movie Id: ");
+                    System.out.print(cyan+"[!] Enter Movie Id: ");
                     int id = scanner.nextInt();
                     MovieInfo movieInfo = service.getMovieDetail(id);
                     TableRenderer.displayTableMovieInformation(movieInfo);
@@ -370,7 +359,7 @@ public class App {
 
         while (true) {
 
-            System.out.println("""
+            System.out.println(green+"""
                     ███╗   ███╗ ██████╗ ██╗   ██╗██╗███████╗    ███████╗███████╗ █████╗ ██████╗  ██████╗██╗  ██╗
                     ████╗ ████║██╔═══██╗██║   ██║██║██╔════╝    ██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝██║  ██║
                     ██╔████╔██║██║   ██║██║   ██║██║█████╗      ███████╗█████╗  ███████║██████╔╝██║     ███████║
@@ -379,7 +368,7 @@ public class App {
                     ╚═╝     ╚═╝ ╚═════╝   ╚═══╝  ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
                     
                     """);
-            System.out.println("""
+            System.out.println(blue+"""
                     Choose Option
                     [s] Search Movie
                     [p] Get Popular Movie
@@ -388,27 +377,27 @@ public class App {
                     [n] Now Playing Movie
                     [e] Exit.
                     """);
-            System.out.print("Enter Option: ");
+            System.out.print(cyan+"Enter Option: ");
             String op = scanner.next();
             switch (op.toLowerCase()) {
                 case "s" -> {
-                    System.out.println("=========== [[ Search Movie ]] ===========");
+                    System.out.println(purple+"=========== [[ Search Movie ]] ===========");
                     searchmMenu();
                 }
                 case "p" -> {
-                    System.out.println("=========== [[ Popular Movie ]] ===========");
+                    System.out.println(purple+"=========== [[ Popular Movie ]] ===========");
                     popularMovie();
                 }
                 case "t" -> {
-                    System.out.println("=========== [[ Top Rated Movie ]] ===========");
+                    System.out.println(blue+"=========== [[ Top Rated Movie ]] ===========");
                     topRatedMovie();
                 }
                 case "u" -> {
-                    System.out.println("=========== [[ Upcoming Movie ]] ===========");
+                    System.out.println(blue+"=========== [[ Upcoming Movie ]] ===========");
                     upcomingMovie();
                 }
                 case "n" -> {
-                    System.out.println("=========== [[ Now Playing Movie ]] ===========");
+                    System.out.println(purple+"=========== [[ Now Playing Movie ]] ===========");
                     nowPlayingMovie();
                 }
                 case "e" -> System.exit(0);

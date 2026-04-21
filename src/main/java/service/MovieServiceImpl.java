@@ -16,38 +16,11 @@ import java.util.Random;
 
 public class MovieServiceImpl implements MovieService{
 
-
     private static final List<Movie> movies = new ArrayList<>();
 
     private static final HttpClient client =
             HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
     private static ObjectMapper mapper = new ObjectMapper();
-    @Override
-    public List<Movie> getAll() {
-
-        return List.of();
-    }
-
-//    @Override
-//    public MovieResponse getDummyMovie(int skip , int limit) {
-//        String url =
-//                String.format("https://api.themoviedb.org/3/discover/movie?api_key=bc635944a4e43701982406e7cd2dbda6",skip,limit);
-//        HttpRequest request = HttpRequest.newBuilder()
-//                .uri(URI.create(url))
-//                .GET()
-//                .build();
-//        try{
-//            HttpResponse<String> response = client.send(
-//                    request, HttpResponse.BodyHandlers.ofString()
-//            );
-//            System.out.println("Status Code" + response.statusCode());
-//            System.out.println("Status " + response.body());
-//            return mapper.readValue(response.body(), MovieResponse.class);
-//        }catch (IOException | InterruptedException e){
-//            throw new RuntimeException(e);
-//        }
-//
-//    }
     @Override
     public String getTrailer(int id) {
         String url = String.format("https://api.themoviedb.org/3/movie/%d/videos?api_key=bc635944a4e43701982406e7cd2dbda6", id);
